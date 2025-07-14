@@ -27,6 +27,8 @@ def normalize_domain(domain):
         domain = domain[4:]
     return domain
 
+import socket
+
 def filter_domains(data, keyword):
     seen = set()
     filtered = []
@@ -39,13 +41,20 @@ def filter_domains(data, keyword):
                 continue
             seen.add(domain)
             if TLD_FILTER in domain and keyword in domain:
+                try:
+                    ip = socket.gethostbyname(domain)
+                except Exception:
+                    ip = "Resolution Failed"
+
                 filtered.append({
                     "timestamp": datetime.now(timezone.utc).isoformat(),
                     "domain": domain,
+                    "ip": ip,
                     "source": "crt.sh",
                     "matched_keyword": keyword
                 })
     return filtered
+
 
 def save_results(results):
     if not results:
