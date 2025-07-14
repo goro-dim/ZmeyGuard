@@ -4,13 +4,9 @@ import re
 import time
 from datetime import datetime, timezone
 
-# ✨ CONFIG
-TARGET_KEYWORDS = ["dsk", "dskbank", "dsck", "dsk-bg", "bankdsk"]
-TLD_FILTER = ".bg"
-OUTPUT_FILE = "tainted_domains_log.csv"
-NEW_ALERTS_FILE = "new_suspicious_domains.csv"
-MAX_RETRIES = 3
-RETRY_DELAY = 5  # seconds
+# CONFIG
+from config import TARGET_KEYWORDS, TLD_FILTER, OUTPUT_FILE, NEW_ALERTS_FILE, MAX_RETRIES, RETRY_DELAY
+
 
 def fetch_crtsh_data(keyword):
     print(f"[~] Fetching domains for keyword: {keyword}")
